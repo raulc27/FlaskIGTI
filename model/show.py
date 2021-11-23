@@ -1,4 +1,5 @@
 from data import alchemy
+from . import episodes
 
 class ShowModel(alchemy.Model):
     __tablename__ = 'shows'
@@ -6,9 +7,8 @@ class ShowModel(alchemy.Model):
     id = alchemy.Column(alchemy.Integer, primary_key=True)
     name = alchemy.Column(alchemy.String(80))
 
-    # episodes fazer algo para carregar automaticamente os episódios
 
-    episodes = []
+    episodes = alchemy.relationship(episodes.EpisodeModel, lazy='dynamic')
 
     def __init__(self, name):
         self.name = name
