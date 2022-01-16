@@ -1,6 +1,6 @@
 from flask import Flask, request,jsonify
 from data import alchemy
-from model import show, episode
+from model import show
 
 app = Flask(__name__)
 
@@ -26,6 +26,25 @@ def create_show():
     print(new_show.id)
     result = show.ShowModel.find_by_id(new_show.id)
     return jsonify(result.json())
+
+@app.route('/show/<string:name>')
+def get_show(name):
+    result = show.ShowModel.find_by_name(name)
+    if result:
+        return result.json()
+    return {'message':'Série não encontrada'}, 404
+
+@app.route('/show/<string:name>/episode',methods=['POST'])
+def create_episode_in_show(name):
+    request_data = request.get_json()
+    parent = show.ShowModule.find_by_name(name)
+    if parent:
+        new_episode = episode.EpisodeModel(name=request_data['name'], season=request_data['season'],show_id=parent.id)
+        new_episode.save_to_db()
+        return new_episode.json()
+    else:
+        return {'nessage':'Série não encontrada'}, 404
+
 
 if __name__ == '__main__':
     from data import alchemy
