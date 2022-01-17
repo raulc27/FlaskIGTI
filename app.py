@@ -40,7 +40,7 @@ def signup():
         return {'message':'Usuário já existe!'}, 409
 
 
-@app.route('/user/<string:username')
+@app.route('/user/<string:username>')
 def get_user(username):
     result = user.UserModel.find_by_username(username)
     if result:
