@@ -47,9 +47,12 @@ def create_episode_in_show(name):
 
 @app.route('/show/<int:id>', methods=['DELETE'])
 def delete_show(id):
-    show_deleted = show.ShowModel.find_by_name(id)
-    show_deleted.delete_from_db();
-    return {'message':'Excluido com sucesso'}, 202
+    result = show.ShowModel.find_by_id(id)
+    if result:
+        result.delete_from_db();
+        return {'message':'Excluido com sucesso'}, 202
+    else:
+        return {'message':'Série não encontrada!!'}, 404
 
 @app.route('/show/<int:id>', methods=['DELETE'])
 def delete_episode(id):
