@@ -1,6 +1,6 @@
 from flask import Flask, request,jsonify
 from data import alchemy
-from model import show
+from model import show, episode
 
 app = Flask(__name__)
 
