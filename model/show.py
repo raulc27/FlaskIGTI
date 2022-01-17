@@ -23,6 +23,10 @@ class ShowModel(alchemy.Model):
     def delete_from_db(self):
         alchemy.session.delete(self)
         alchemy.session.commit();
+    
+    def update(self):
+        alchemy.session.update(self)
+        alchemy.session.commit()
 
     @classmethod 
     def list_shows(cls):
