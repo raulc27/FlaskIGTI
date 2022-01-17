@@ -56,9 +56,12 @@ def delete_show(id):
 
 @app.route('/show/<int:id>', methods=['DELETE'])
 def delete_episode(id):
-    show_deleted = episode.EpisodeModel.find_by_id(id)
-    show_deleted.delete_from_db()
-    return {'message':'Excluído com scuesso!'}, 202
+    result = episode.EpisodeModel.find_by_id(id)
+    if result:
+        result.delete_from_db()
+        return {'message':'Excluído com scuesso!'}, 202
+    else:
+        return {'message':'Episódio não encontrado'}, 404
 
 @app.route('/shows')
 def list():
