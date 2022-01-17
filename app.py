@@ -45,6 +45,22 @@ def create_episode_in_show(name):
     else:
         return {'nessage':'Série não encontrada'}, 404
 
+@app.route('/show/<int:id>', methods=['DELETE'])
+def delete_show(id):
+    show_deleted = show.ShowModel.find_by_name(id)
+    show_deleted.delete_from_db();
+    return {'message':'Excluido com sucesso'}, 202
+
+@app.route('/show/<int:id>', methods=['DELETE'])
+def delete_episode(id):
+    show_deleted = episode.EpisodeModel.find_by_id(id)
+    show_deleted.delete_from_db()
+    return {'message':'Excluído com scuesso!'}, 202
+
+@app.route('/shows')
+def list():
+    result = show.ShowModel.list_shows()
+    return {'showlist':result},200
 
 if __name__ == '__main__':
     from data import alchemy

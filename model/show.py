@@ -20,6 +20,18 @@ class ShowModel(alchemy.Model):
         alchemy.session.add(self)
         alchemy.session.commit()
 
+    def delete_from_db(self):
+        alchemy.session.delete(self)
+        alchemy.session.commit();
+
+    @classmethod 
+    def list_shows(cls):
+        result_list = []
+        result = cls.query.all()
+        for r in result:
+            result_list.append(r.json())
+        return result_list
+
     @classmethod
     def find_by_name(cls, name):
         return cls.query.filter_by(name=name).first()
